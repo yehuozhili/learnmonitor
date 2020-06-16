@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+  </head>
+  <body>
+    <div id="container">
+      <input type="button" value="报错" onclick="errorClick()" />
+      <input
+        id="p2"
+        type="button"
+        value="promise报错"
+        onclick="promiseError()"
+      />
+      <input type="button" value="success" onclick="success()" />
+      <input type="button" value="err" onclick="errr()" />
+      <button id="longlonglong" onclick="longTask()">执行longTask</button>
+    </div>
+    <script>
+      window.userip = returnCitySN["cip"];
+      function success() {
+        let xhr = new XMLHttpRequest();
+        xhr.open("GET", "/success", true);
+        (xhr.responseType = "json"),
+          (xhr.onload = function () {
+            console.log(xhr.response);
+          });
+        xhr.send();
+      }
+      function errr() {
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", "/error", true);
+        (xhr.responseType = "json"),
+          (xhr.onload = function () {
+            console.log(xhr.response);
+          });
+        xhr.send();
+      }
+      function errorClick() {
+        window.IamNotExist.error = "error";
+      }
+      function promiseError() {
+        new Promise(function (res, rej) {
+          window.IamNotExist.error = "error";
+        });
+      }
+      setTimeout(() => {
+        let h1 = document.createElement("h1");
+        h1.innerHTML = "我是正义的h1";
+        h1.setAttribute("elementtiming", "sss");
+        let container = document.getElementById("container");
+        container.appendChild(h1);
+      }, 2000);
+
+      function longTask() {
+        let start = Date.now();
+        console.log("longTask开始 start", start);
+        while (Date.now() < 2000 + start) {}
+        console.log("longTask结束 end", Date.now() - start);
+      }
+    </script>
+    <script src="/someerror/link"></script>
+  </body>
+</html>
